@@ -1,0 +1,58 @@
+import barrioss.*
+import elementos.*
+import plagas.*
+test "es Bueno " {
+	
+	assert.that(new Hogar(nivelDeMugre = 15 , nivelDeConfort = 32).esBueno())
+	
+	assert.that(new Huerta(produccionPorMes = 10 , nivel = 9).esBueno() )
+	
+	assert.that(new Mascota(nivelDeSalud = 251).esBueno() )
+
+}
+
+test "no es Bueno " {
+	
+	assert.notThat(new Hogar(nivelDeMugre = 19 , nivelDeConfort = 32).esBueno())
+	
+	assert.notThat(new Huerta(produccionPorMes = 10 , nivel = 11).esBueno() )
+	
+	assert.notThat(new Mascota(nivelDeSalud = 123).esBueno() )
+
+}
+
+test "barrio es copado"{
+	const b1 = new Barrio()
+	
+	b1.agregarElemento(new Hogar(nivelDeMugre = 19 , nivelDeConfort = 32))
+	b1.agregarElemento(new Huerta(produccionPorMes = 10 , nivel = 9))
+	b1.agregarElemento(new Mascota(nivelDeSalud = 251))
+	
+	assert.that(b1.esCopado())
+	
+	b1.agregarElemento(new Huerta(produccionPorMes = 10 , nivel = 11))
+	b1.agregarElemento(new Mascota(nivelDeSalud = 123))
+	
+	assert.notThat(b1.esCopado())
+}
+
+test " una plaga trasmite enfermedades"{
+	const b1 = new Barrio()
+	
+	assert.that (b1.transmiteEnfenrmedades(new Cucaracha(pesoPromedio = 10 , poblacion = 20)))
+	
+	assert.that (b1.transmiteEnfenrmedades(new Mosquito(poblacion = 21)))
+}
+
+test " atacar barrio"{
+	const b1 = new Barrio()
+	const g = new Garrapata( poblacion = 20)
+	
+	b1.agregarElemento(new Hogar(nivelDeMugre = 19 , nivelDeConfort = 32))
+	
+	
+	b1.sufriAtaqueDe(g)
+	
+	assert.that(g.poblacion() == 24)
+	
+}
